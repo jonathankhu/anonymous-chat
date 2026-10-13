@@ -147,3 +147,12 @@ vite.config.ts.timestamp-*
 
 # Turbo Repo
 .turbo
+
+# Secrets (see docs/architecture.md section 8)
+site/js/config.js
+*.key
+*.pem
+service_role*
+
+# macOS
+.DS_Store
