@@ -1,0 +1,57 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # 產生 site/js/config.js（不進入 git 歷史）。
+      # 兩個 Variables 都有填才使用 Supabase，否則一律是模擬版（階段一）。
+      # SUPABASE_URL 與 SUPABASE_ANON_KEY 本來就是公開資訊，所以用 Variables 而不是 Secrets。
+      # 絕對不要在這裡放 service_role key。
+      - name: Generate config.js
+        env:
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ vars.SUPABASE_ANON_KEY }}
+        run: |
+          if [ -n "$SUPABASE_URL" ] && [ -n "$SUPABASE_ANON_KEY" ]; then
+            BACKEND=supabase
+          else
+            BACKEND=mock
+            SUPABASE_URL=""
+            SUPABASE_ANON_KEY=""
+          fi
+          cat > site/js/config.js <<EOF
+          export const config = {
+            backend: "$BACKEND",
+            supabaseUrl: "$SUPABASE_URL",
+            supabaseAnonKey: "$SUPABASE_ANON_KEY",
+          };
+          EOF
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

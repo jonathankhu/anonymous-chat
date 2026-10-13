@@ -564,8 +564,8 @@ anonymous-chat/
 
 1. 你（或 Claude）把修改 push 到 `main` 分支。
 2. GitHub Actions 自動啟動 `deploy.yml`：
-   - 若有 `SUPABASE_URL` 與 `SUPABASE_ANON_KEY`，就產生 `site/js/config.js`，內容 `backend: "supabase"` 加上這兩個值。
-   - 若沒有，就不產生（程式會自動退回 `"mock"` 模擬版）。
+   - 一律產生 `site/js/config.js`。若有 `SUPABASE_URL` 與 `SUPABASE_ANON_KEY`，內容是 `backend: "supabase"` 加上這兩個值。
+   - 若沒有，內容是 `backend: "mock"`（模擬版）。這樣網頁不會因為找不到設定檔而在主控台出現 404 錯誤。
    - 把 `site/` 資料夾打包上傳到 GitHub Pages。
 3. 約一兩分鐘後，網站更新完成。
 
