@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
   <meta name="color-scheme" content="light dark">
   <title>匿名聊天室</title>
   <link rel="icon" href="data:,">
@@ -15,15 +15,23 @@
     <!-- 畫面 A：輸入代號 -->
     <section id="screen-entry" class="screen screen--entry">
       <form id="entry-form" class="entry" novalidate>
-        <h1 class="entry__title">匿名聊天室</h1>
+        <span class="brand-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.7 8.7 0 0 1-3.6-.8L3 20l1.1-4.9A8.4 8.4 0 1 1 21 11.5z"/>
+            <path d="M9 11.5h.01M12.5 11.5h.01M16 11.5h.01"/>
+          </svg>
+        </span>
+        <h1 class="entry__title">歡迎來到匿名聊天室</h1>
+        <p class="entry__lead">不用註冊，取個代號就能和大家聊天。</p>
         <p class="entry__notice">
           這是公開聊天室，任何人都看得到你的訊息與檔案；離開後你就看不到先前的內容。
         </p>
 
-        <label class="field__label" for="nickname-input">你的代號</label>
+        <label class="field__label" for="nickname-input">你的代號（1 到 20 個字，中文、英文、數字）</label>
         <input id="nickname-input" class="field__input" type="text" inputmode="text"
                autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="40"
-               placeholder="1 到 20 個字，中文、英文、數字">
+               placeholder="例如：小花、Mia88">
         <p id="entry-error" class="field__error" role="alert"></p>
 
         <button id="enter-btn" class="btn btn--primary" type="submit" disabled>進入</button>
@@ -33,6 +41,13 @@
     <!-- 畫面 B：聊天室 -->
     <section id="screen-chat" class="screen screen--chat" hidden>
       <header class="chat__header">
+        <span class="brand-icon brand-icon--sm" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.7 8.7 0 0 1-3.6-.8L3 20l1.1-4.9A8.4 8.4 0 1 1 21 11.5z"/>
+            <path d="M9 11.5h.01M12.5 11.5h.01M16 11.5h.01"/>
+          </svg>
+        </span>
         <div class="chat__heading">
           <h1 class="chat__title">匿名聊天室</h1>
           <p id="online-count" class="chat__online">目前 0 人在線</p>
