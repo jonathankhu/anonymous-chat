@@ -1,4 +1,4 @@
-/* Soft Pastel V2 風格（見 docs/design.md）。
+/* Kawaii Pastel 風格（見 docs/design.md）。
    所有顏色、圓角、陰影、動畫節奏都集中在 :root，換風格只要改這一區。 */
 
 :root {
@@ -36,6 +36,10 @@
   --entry-end: #f3ece6;
   --online-bg: rgba(168, 197, 181, 0.3);
   --notice-card-text: #6a5860;
+
+  --peach: #fbe6d6;
+  --pink-deep: #ec9db2;
+  --card-edge: #efe6d9;
 
   --radius: 20px;
   --radius-lg: 28px;
@@ -150,21 +154,22 @@ body {
 
 :focus-visible { outline: 3px solid var(--line-focus); outline-offset: 2px; }
 
-/* ---------- 品牌圖示 ---------- */
+/* ---------- 品牌圖示與裝飾 ---------- */
 
 .brand-icon {
   flex: none;
   display: grid;
   place-items: center;
-  width: 56px;
-  height: 56px;
-  border-radius: 20px;
-  background: linear-gradient(145deg, var(--sage), #c4dacd);
-  color: var(--accent-text);
-  box-shadow: 0 8px 20px var(--glow-a);
+  width: 44px;
+  height: 44px;
+  border-radius: 16px;
+  background: linear-gradient(145deg, var(--blush), #fbeef1);
+  border: 1.5px solid var(--other-line);
+  box-shadow: var(--shadow-sm);
 }
-.brand-icon--sm { width: 44px; height: 44px; border-radius: 16px; box-shadow: var(--shadow-sm); }
-.brand-icon--sm svg { width: 22px; height: 22px; }
+.brand-icon img { display: block; width: 30px; height: 30px; }
+
+.deco { position: absolute; pointer-events: none; user-select: none; }
 
 /* ---------- 畫面 A：輸入代號 ---------- */
 
@@ -182,52 +187,124 @@ body {
     radial-gradient(70% 50% at 70% 100%, var(--glow-a), transparent 70%),
     linear-gradient(160deg, var(--bg) 0%, var(--entry-end) 100%);
 }
+.screen--entry::before, .screen--entry::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.screen--entry::before { width: 34px; height: 34px; top: 7%; left: 8%; background-image: url("../img/flower.svg"); transform: rotate(-12deg); }
+.screen--entry::after { width: 28px; height: 28px; bottom: 7%; right: 9%; background-image: url("../img/flower-sage.svg"); transform: rotate(14deg); }
 /* 鍵盤彈出或橫放而高度不足時，改為靠上，避免標題被推出畫面 */
 @media (max-height: 560px) { .screen--entry { place-items: start center; } }
 
 .entry {
+  position: relative;
   width: 100%;
   max-width: 420px;
+  margin-top: 84px; /* 留給探出頭的小動物 */
   background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 32px;
-  box-shadow: var(--shadow-lg);
-  padding: 36px 24px 28px;
+  border: 2px solid var(--card-edge);
+  border-radius: 36px;
+  box-shadow: var(--shadow-lg), 0 0 0 6px rgba(255, 253, 249, 0.55);
+  padding: 44px 24px 28px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 12px;
+  gap: 10px;
 }
-@media (min-width: 640px) { .entry { padding: 48px 40px 36px; max-width: 460px; } }
-.entry > .brand-icon { align-self: center; width: 64px; height: 64px; border-radius: 22px; }
-.entry > .brand-icon svg { width: 28px; height: 28px; }
+@media (min-width: 640px) { .entry { padding: 52px 40px 36px; max-width: 460px; } }
+@media (max-height: 560px) { .entry { margin-top: 84px; } }
+
+/* 探出頭的兔子與貓咪：兩隻前爪搭在卡片上緣 */
+.entry__pets {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(100% - 9px);
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  pointer-events: none;
+}
+.pet { display: block; width: 112px; height: auto; filter: drop-shadow(0 4px 6px rgba(64, 86, 76, 0.1)); }
+@media (min-width: 640px) { .pet { width: 124px; } }
+.pet--bunny { transform-origin: 50% 100%; }
+.pet--cat { transform-origin: 50% 100%; }
+
+.entry__deco--a { width: 22px; top: 18px; left: 20px; transform: rotate(-14deg); }
+.entry__deco--b { width: 26px; top: 14px; right: 22px; transform: rotate(12deg); }
+.entry__deco--c { width: 14px; top: 34px; right: 58px; }
 
 .entry__title {
-  margin: 6px 0 0;
-  font-size: 1.45rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  margin: 4px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 1.4rem;
+  line-height: 1.25;
+  font-weight: 800;
+  letter-spacing: 0.08em;
   color: var(--text-strong);
   text-align: center;
 }
-.entry__lead { margin: 0 0 6px; text-align: center; color: var(--text-muted); font-size: 0.95rem; }
+.entry__title::before, .entry__title::after {
+  content: "";
+  flex: none;
+  width: 16px;
+  height: 16px;
+  background: url("../img/flower.svg") center / contain no-repeat;
+}
+.entry__title::after { background-image: url("../img/flower-sage.svg"); }
+@media (max-width: 360px) {
+  .entry__title { font-size: 1.25rem; letter-spacing: 0.05em; }
+  .entry__title::before, .entry__title::after { display: none; }
+}
+.entry__lead { margin: 0 0 8px; text-align: center; color: var(--text-muted); font-size: 0.95rem; letter-spacing: 0.03em; }
 .entry__notice {
-  margin: 0 0 8px;
-  padding: 14px 16px;
+  position: relative;
+  margin: 0 0 10px;
+  padding: 14px 16px 14px 48px;
   background: var(--blush);
-  border-radius: 18px;
+  border: 1.5px dashed var(--other-line);
+  border-radius: 20px;
   color: var(--notice-card-text);
-  font-size: 0.9rem;
-  text-align: center;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  text-align: left;
+}
+.entry__notice::before {
+  content: "";
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  width: 22px;
+  height: 20px;
+  transform: translateY(-50%);
+  background: url("../img/heart.svg") center / contain no-repeat;
 }
 
-.field__label { font-weight: 600; font-size: 0.85rem; color: var(--text); padding-left: 6px; }
+.field__head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 0 6px; }
+.field__label { font-weight: 700; font-size: 0.92rem; color: var(--text-strong); letter-spacing: 0.05em; }
+.field__counter {
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  padding: 1px 10px;
+  border-radius: 999px;
+  background: var(--time-bg);
+}
+.field__counter--over { color: var(--danger); background: var(--blush); }
+.field__rule { margin: -2px 0 0; padding: 0 6px; font-size: 0.78rem; color: var(--text-muted); }
 .field__input {
   font: inherit;
   width: 100%;
   min-height: 52px;
   padding: 0 20px;
-  border: 1.5px solid var(--line);
+  border: 2px solid var(--card-edge);
   border-radius: 999px;
   background: var(--bg);
   color: var(--text-strong);
@@ -241,14 +318,16 @@ body {
   background: var(--surface);
   box-shadow: 0 0 0 4px var(--glow-a);
 }
-.field__error { margin: 0; min-height: 1.5em; padding-left: 6px; color: var(--danger); font-size: 0.88rem; }
+.field__error { margin: 0; min-height: 1.2em; padding: 0 6px; color: var(--danger); font-size: 0.88rem; }
 .entry .btn--primary {
   min-height: 54px;
-  margin-top: 4px;
+  margin-top: 2px;
   font-size: 1.05rem;
-  background: linear-gradient(135deg, #b5d0c1, var(--sage));
-  box-shadow: 0 8px 20px var(--glow-a);
+  background: linear-gradient(135deg, #b9d3c5, var(--sage));
+  box-shadow: 0 4px 0 #8fb2a0, 0 10px 20px var(--glow-a);
 }
+.entry .btn--primary:not(:disabled):hover { box-shadow: 0 5px 0 #8fb2a0, 0 12px 22px var(--glow-a); }
+.entry .btn--primary:not(:disabled):active { transform: translateY(3px); box-shadow: 0 1px 0 #8fb2a0; }
 .entry .btn--primary::after { content: "  →"; transition: margin 0.2s var(--ease); }
 .entry .btn--primary:not(:disabled):hover::after { margin-left: 4px; }
 
@@ -266,6 +345,20 @@ body {
     radial-gradient(70% 40% at 100% 100%, var(--glow-a), transparent 70%),
     var(--bg);
 }
+
+/* 背景裝飾：散落的小花與愛心，放在內容後面 */
+.screen--chat { isolation: isolate; }
+.screen--chat::before, .screen--chat::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.55;
+}
+.screen--chat::before { width: 46px; height: 46px; top: 96px; right: 14px; background-image: url("../img/flower.svg"); transform: rotate(14deg); }
+.screen--chat::after { width: 36px; height: 34px; bottom: 120px; left: 10px; background-image: url("../img/heart.svg"); transform: rotate(-12deg); }
 
 /* 電腦：置中的圓角卡片 */
 @media (min-width: 860px) {
@@ -297,8 +390,11 @@ body {
   border: 1px solid var(--line);
   border-radius: 28px;
   box-shadow: var(--shadow-md);
+  border-width: 2px;
+  border-color: var(--card-edge);
   z-index: 2;
 }
+.chat__flower { width: 15px; height: 15px; margin-left: 6px; vertical-align: -1px; }
 .chat__heading { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 3px; }
 .chat__title { margin: 0; font-size: 1.05rem; line-height: 1.2; font-weight: 700; letter-spacing: 0.06em; color: var(--text-strong); }
 .chat__online {
@@ -341,16 +437,23 @@ body {
 }
 
 .messages__empty {
-  margin: 56px auto 0;
-  width: fit-content;
-  padding: 8px 20px;
-  border-radius: 999px;
+  margin: 28px auto 0;
+  width: min(280px, 100%);
+  padding: 18px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  border-radius: 28px;
   background: var(--surface);
-  border: 1px dashed var(--line);
+  border: 2px dashed var(--card-edge);
   text-align: center;
-  color: var(--text-muted);
+  color: var(--text);
+  font-weight: 700;
   letter-spacing: 0.08em;
 }
+.messages__empty-art { width: 190px; max-width: 100%; height: auto; margin-bottom: 4px; }
+.messages__empty small { font-weight: 400; font-size: 0.8rem; letter-spacing: 0.04em; color: var(--text-muted); }
 
 /* 訊息：代號 → 氣泡 → 時間。meta 用 display: contents，
    讓時間能排到氣泡下方，不必改動 JS 產生的結構。 */
@@ -388,7 +491,7 @@ body {
   white-space: pre-wrap;
   max-width: 100%;
   line-height: 1.6;
-  border: 1px solid transparent;
+  border: 1.5px solid transparent;
   box-shadow: var(--shadow-sm);
   transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
 }
@@ -463,14 +566,15 @@ a.msg__file:hover { transform: translateY(-1px); border-color: var(--sage); box-
   background: var(--glass);
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
-  border: 1px solid var(--line);
+  border: 2px solid var(--card-edge);
   border-radius: 30px;
   box-shadow: var(--shadow-lg);
   transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
 }
 .composer:focus-within { border-color: var(--line-focus); box-shadow: var(--shadow-lg), 0 0 0 4px var(--glow-a); }
 .composer__row { display: flex; align-items: flex-end; gap: 6px; }
-.composer__row .btn--primary { min-height: 44px; padding: 0 20px; }
+.composer__row .btn--primary { min-height: 44px; padding: 0 20px; box-shadow: 0 3px 0 #8fb2a0; }
+.composer__row .btn--primary:not(:disabled):active { transform: translateY(2px); box-shadow: 0 1px 0 #8fb2a0; }
 .composer__input {
   flex: 1;
   min-width: 0;
@@ -539,6 +643,9 @@ a.msg__file:hover { transform: translateY(-1px); border-color: var(--sage); box-
   .toast { animation: toast-in 0.3s var(--ease); }
   .new-msg { animation: nudge 0.35s var(--ease); }
 
+  .pet--bunny { animation: bob 3.4s ease-in-out infinite; }
+  .pet--cat { animation: bob 3.4s ease-in-out -1.7s infinite; }
+  @keyframes bob { 50% { transform: translateY(-3px) rotate(-1.5deg); } }
   @keyframes pop { from { opacity: 0; transform: translateY(10px) scale(0.97); } }
   @keyframes rise { from { opacity: 0; transform: translateY(16px); } }
   @keyframes fade { from { opacity: 0; } }

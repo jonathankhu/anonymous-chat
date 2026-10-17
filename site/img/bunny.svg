@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 112" fill="none">
+  <g stroke="#d9c9bd" stroke-width="2.5" stroke-linejoin="round">
+    <g transform="rotate(-12 44 40)"><ellipse cx="44" cy="36" rx="12" ry="32" fill="#fffdf9"/><ellipse cx="44" cy="38" rx="6" ry="22" fill="#f4c9d5" stroke="none"/></g>
+    <g transform="rotate(14 88 40)"><ellipse cx="88" cy="34" rx="12" ry="31" fill="#fffdf9"/><ellipse cx="88" cy="36" rx="6" ry="21" fill="#f4c9d5" stroke="none"/></g>
+    <ellipse cx="65" cy="82" rx="44" ry="31" fill="#fffdf9"/>
+  </g>
+  <circle cx="49" cy="80" r="3.6" fill="#40564c"/><circle cx="81" cy="80" r="3.6" fill="#40564c"/>
+  <circle cx="50.2" cy="78.8" r="1.1" fill="#fff"/><circle cx="82.2" cy="78.8" r="1.1" fill="#fff"/>
+  <ellipse cx="38" cy="90" rx="7" ry="4.5" fill="#f6b9c8" opacity=".75"/><ellipse cx="92" cy="90" rx="7" ry="4.5" fill="#f6b9c8" opacity=".75"/>
+  <path d="M61.5 86.5h7l-3.5 4z" fill="#ee9fb3" stroke="#ee9fb3" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M65 90.5v2.5M65 93c-2 2.4-5 2.4-6.5.4M65 93c2 2.4 5 2.4 6.5.4" stroke="#8a6f6f" stroke-width="1.8" stroke-linecap="round"/>
+  <g fill="#fffdf9" stroke="#d9c9bd" stroke-width="2.5"><ellipse cx="38" cy="107" rx="11" ry="7"/><ellipse cx="92" cy="107" rx="11" ry="7"/></g>
+  <g stroke="#d9c9bd" stroke-width="1.8" stroke-linecap="round"><path d="M35 105v4M41 105v4M89 105v4M95 105v4"/></g>
+</svg>
